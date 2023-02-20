@@ -11,45 +11,60 @@ import { MatPaginator } from '@angular/material/paginator';
 })
 export class ListComponent implements OnInit {
   contacts = [];
-  displayedColumns: string[] = ['name', 'power', 'strength', 'intelligence', 'stamina', 'action'];
+  displayedColumns: string[] = ['name', 'power', 'stats', 'action'];
   dataSource;
+  evolvedHero = undefined;
   // @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
   constructor(private apiService: ApiService) { }
 
   ngOnInit() {
-    //   this.apiService.getContacts().then(
-    //     resp => {
-    //       //////console.log(resp);
-    //       if (resp.contacts.length > 0) {
-    //         this.contacts = resp.contacts
-    //         this.dataSource = new MatTableDataSource<any>(this.contacts);
-    //         // this.dataSource.paginator = this.paginator;
-    //         // this.loading = false;
-    //       }
-    //     }
-    //   ).then(
-    //     error => {
-    //       console.log(error);      
-    //     }
-    //   );
-    this.contacts = [
-      {
-        'name': "Hulk",
-        'power': "Strength from gamma radiation",
-        'stats':
-        {
-          'strength': 5000,
-          'stamina': 2500,
-          'intelligence': 50
+      this.apiService.getContacts().then(
+        resp => {
+          console.log(resp[0].stats[0])
+          if (resp.length > 0) {
+            this.contacts = resp
+           this.dataSource = new MatTableDataSource<any>(this.contacts);
+            // this.dataSource.paginator = this.paginator;
+            // this.loading = false;
+          }
         }
-      }
-    ]
+      ).then(
+        error => {
+          console.log(error);      
+        }
+      );
+    // this.contacts = [
+    //   {
+    //     'name': "Hulk",
+    //     'power': "Strength from gamma radiation",
+    //     'stats':
+    //     {
+    //       'strength': 5000,
+    //       'stamina': 2500,
+    //       'intelligence': 50
+    //     }
+    //   }
+    // ]
 
     this.dataSource = new MatTableDataSource<any>(this.contacts);
 
   }
-  evolveHero(){
-    
+  evolveHero(name, action) {
+    let heroAction = {
+      name: name,
+      action: action
+    }
+    console.log(heroAction);
+    this.evolvedHero = {
+      'name': "Hulk",
+      'power': "Strength from gamma radiation",
+      'stats':
+      {
+        'strength': 5000,
+        'stamina': 2500,
+        'intelligence': 50
+      }
+    }
   }
 
 }

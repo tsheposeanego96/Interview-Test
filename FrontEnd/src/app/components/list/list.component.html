@@ -1,37 +1,43 @@
 <div>
-  <table mat-table [dataSource]="dataSource" matSort >
+  <h2 id="heading">Tour of Heroes</h2>
+</div>
+<div>
+  <mat-card *ngIf="evolvedHero!=undefined">
+    <mat-card-header>
+      <h3><strong>{{evolvedHero.name}}</strong> has updated with</h3>
+    </mat-card-header>
+    <mat-card-content>
+      <ul>
+        <li *ngFor="let item of element.stats;">{{item.key}}:  {{item.value}}:</li><li>
+      </ul>
+    </mat-card-content>
+  </mat-card>
+</div>
+<div>
+  <table mat-table [dataSource]="dataSource" matSort>
 
     <ng-container matColumnDef="name">
       <th mat-header-cell *matHeaderCellDef> Name </th>
       <td mat-cell *matCellDef="let element"> {{element.name | titlecase}} </td>
     </ng-container>
-  
+
     <!-- Name Column -->
     <ng-container matColumnDef="power">
       <th mat-header-cell *matHeaderCellDef> Power </th>
       <td mat-cell *matCellDef="let element"> {{element.power}} </td>
     </ng-container>
-  
-    <ng-container matColumnDef="strength">
-      <th mat-header-cell *matHeaderCellDef mat-sort-header> Strength </th>
-      <td mat-cell *matCellDef="let element"> {{element.stats.strength}} </td>
-    </ng-container>
-  
-    <ng-container matColumnDef="intelligence">
-      <th mat-header-cell *matHeaderCellDef mat-sort-header> Intelligence </th>
-      <td mat-cell *matCellDef="let element"> {{element.stats.intelligence}} </td>
-    </ng-container>
-  
-      <ng-container matColumnDef="stamina">
-      <th mat-header-cell *matHeaderCellDef> stamina </th>
-      <td mat-cell *matCellDef="let element"> {{element.stats.stamina}} </td>
+
+    <ng-container matColumnDef="stats">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header> Stats </th>
+      <td mat-cell *matCellDef="let element"> <li *ngFor="let item of element.stats;">{{item.key}}:  {{item.value}}:</li></td>
     </ng-container>
 
     <ng-container matColumnDef="action">
       <th mat-header-cell *matHeaderCellDef> Action </th>
-      <td mat-cell *matCellDef="let element">  <button mat-stroked-button (click)="evolveHero()" >Evolve</button> </td>
+      <td mat-cell *matCellDef="let element"> <button mat-raised-button color="primary"
+          (click)="evolveHero(element.name,'evolve')">Evolve</button> </td>
     </ng-container>
-  
+
     <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
     <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
   </table>

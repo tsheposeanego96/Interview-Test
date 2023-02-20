@@ -42,8 +42,19 @@ namespace InterviewTest.Controllers
 
         // POST: api/Heroes
         [HttpPost]
-        public void Post([FromBody] string value)
+        public object Post([FromBody] heroAction heroData)
         {
+            string name;
+            string action;
+            Hero actionedHero;
+            name = heroData.name;
+            action = heroData.action;
+            actionedHero = Get(5);
+
+            if (action == "evolve")
+            {
+            }
+            return actionedHero;
         }
 
         // PUT: api/Heroes/5
@@ -58,4 +69,11 @@ namespace InterviewTest.Controllers
         {
         }
     }
+}
+
+public class heroAction
+{
+    public string name { get; set; }
+    public string action { get; set; }
+
 }
